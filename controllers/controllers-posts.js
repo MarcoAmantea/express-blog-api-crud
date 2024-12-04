@@ -14,16 +14,31 @@ const index = (req, res) => {
 const show = (req, res) => {
     const postId = parseInt(req.params.id);    
     const postDetail = posts.filter((curPost) => {
-        return curPost.id === postId
+        if(curPost.id === postId){
+            res.json(curPost)
+        }else{
+            res.statusCode = 404;
+            res.json({
+                error: true,
+                message: "Post non trovato"
+    
+            })
+        }
     });
-    res.json(postDetail);
+    
 };
 
 //DESTROY
 const destroy = (req, res) => {
     const postId = parseInt(req.params.id);
     const postIndex = posts.findIndex((curPost) => curPost.id === postId);
-    if(postIndex){
+    if(postIndex === -1){
+        res.statusCode = 404;
+        res.json({
+            error: true,
+            message: "POST NON TROVATO"
+        })
+    }else{
         posts.splice(postIndex,1);
         res.sendStatus(204);
         console.log(posts);
