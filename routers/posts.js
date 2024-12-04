@@ -10,23 +10,12 @@ router.get("/", controllerPosts.index)
 router.get("/:id", controllerPosts.show)
 
 //CREATE
-router.post("/", (req, res) => {
-    res.json("aggiungiamo un nuovo elemento")
-})
+router.post("/", controllerPosts.create)
 
 //UPDATE
-router.put("/:id", (req, res) => {
-    const postId = req.params.id
-    res.json("modifichiamo tutti i dati dell'oggetto con id numero " + postId)
-})
+router.put("/:id", controllerPosts.update)
 //MODIFY
-router.patch("/:id", (req, res) => {
-    const postId = req.params.id
-    res.json("modifichiamo solo alcuni dati dell'oggetto con id numero " + postId)
-})
+router.patch("/:id", controllerPosts.modify)
 //DESTROY
-router.delete("/:id", (req, res) => {
-    const postId = req.params.id
-    res.json("eliminiamo i dati dell'oggetto con id numero " + postId)
-})
+router.delete("/:id", controllerPosts.destroy)
 module.exports = router;
