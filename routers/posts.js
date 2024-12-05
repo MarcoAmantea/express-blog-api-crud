@@ -10,12 +10,15 @@ router.get("/", controllerPosts.index)
 router.get("/:id", controllerPosts.show)
 
 //CREATE
-router.post("/", controllerPosts.create)
+router.post("/", controllerPosts.store)
 
 //UPDATE
 router.put("/:id", controllerPosts.update)
+
 //MODIFY
 router.patch("/:id", controllerPosts.modify)
+
 //DESTROY
 router.delete("/:id", controllerPosts.destroy)
+
 module.exports = router;

@@ -46,14 +46,34 @@ const destroy = (req, res) => {
 }
 
 //CREATE
-const create = (req, res) => {
-    res.json("aggiungiamo un nuovo elemento")
+const store = (req, res) => {
+    console.log(req.body);
+    const newPost = req.body
+    //calcolo il successivo id
+    newPost.id = posts[posts.length -1].id +1
+    posts.push(newPost)
+    
+    
+    res.json(newPost);
 }
 
 //UPDATE
 const update = (req, res) => {
-    const postId = req.params.id
-    res.json("modifichiamo tutti i dati dell'oggetto con id numero " + postId)
+    const postId = parseInt(req.params.id);
+    const newData = req.body;
+    const index = posts.findIndex((curIndex) => curIndex.id === postId);
+    console.log(index);
+    if(index === -1){
+        res.sendStatus(404),
+        res.json({
+            message: "POST NON TROVATO"
+        })
+    }else{
+        posts[index] = newData;   
+    res.json({
+        updatedPost: newData
+    })
+    }
 }
 
 //MODIFY
@@ -67,7 +87,7 @@ const modify = (req, res) => {
 module.exports = {
     index,
     show,
-    create,
+    store,
     update,
     modify,
     destroy

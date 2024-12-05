@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const posts = require("./data/posts");
 const router = require("./routers/posts")
-
+app.use(express.json())
 app.use(express.static("public"))
 app.use("/posts", router)
 
