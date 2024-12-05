@@ -4,10 +4,19 @@ const express = require("express");
 
 //INDEX
 const index = (req, res) => {
-    res.json({
-        postsList: posts,
-        totalePosts: posts.length
-    })
+    const query = req.query.tags;
+    if(query === undefined){
+        res.json({
+            postsList: posts,
+            totalePosts: posts.length
+        })
+    }else{
+        const result = posts.filter((curPost) => curPost.tags.includes(query));
+        res.json({
+            searchedPost: result,
+            totalePosts: result.length
+        })
+    }
 };
 
 //SHOW
