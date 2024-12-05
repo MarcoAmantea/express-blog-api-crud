@@ -64,8 +64,9 @@ const update = (req, res) => {
     const index = posts.findIndex((curIndex) => curIndex.id === postId);
     console.log(index);
     if(index === -1){
-        res.sendStatus(404),
+        res.statusCode = 404,
         res.json({
+            error: true,
             message: "POST NON TROVATO"
         })
     }else{
