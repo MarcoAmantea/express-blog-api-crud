@@ -5,12 +5,12 @@ const express = require("express");
 //INDEX
 const index = (req, res) => {
     const query = req.query.tags;
-    if(query === undefined){
+    if (query === undefined) {
         res.json({
             postsList: posts,
             totalePosts: posts.length
         })
-    }else{
+    } else {
         const result = posts.filter((curPost) => curPost.tags.includes(query));
         res.json({
             searchedPost: result,
@@ -21,37 +21,20 @@ const index = (req, res) => {
 
 //SHOW
 const show = (req, res) => {
-    const postId = parseInt(req.params.id);    
-    const postDetail = posts.filter((curPost) => {
-        if(curPost.id === postId){
-            res.json(curPost)
-        }else{
-            res.statusCode = 404;
-            res.json({
-                error: true,
-                message: "Post non trovato"
-    
-            })
-        }
-    });
-    
+    const postId = parseInt(req.params.id);
+    const postDetail = posts.filter((curPost) => curPost.id === postId);
+    res.json(postDetail);
 };
+
 
 //DESTROY
 const destroy = (req, res) => {
     const postId = parseInt(req.params.id);
     const postIndex = posts.findIndex((curPost) => curPost.id === postId);
-    if(postIndex === -1){
-        res.statusCode = 404;
-        res.json({
-            error: true,
-            message: "POST NON TROVATO"
-        })
-    }else{
-        posts.splice(postIndex,1);
-        res.sendStatus(204);
-        console.log(posts);
-    }
+    posts.splice(postIndex, 1);
+    res.sendStatus(204);
+    console.log(posts);
+
 }
 
 //CREATE
@@ -59,10 +42,8 @@ const store = (req, res) => {
     console.log(req.body);
     const newPost = req.body
     //calcolo il successivo id
-    newPost.id = posts[posts.length -1].id +1
+    newPost.id = posts[posts.length - 1].id + 1
     posts.push(newPost)
-    
-    
     res.json(newPost);
 }
 
@@ -72,18 +53,11 @@ const update = (req, res) => {
     const newData = req.body;
     const index = posts.findIndex((curIndex) => curIndex.id === postId);
     console.log(index);
-    if(index === -1){
-        res.statusCode = 404,
-        res.json({
-            error: true,
-            message: "POST NON TROVATO"
-        })
-    }else{
-        posts[index] = newData;   
+    posts[index] = newData;
     res.json({
         updatedPost: newData
     })
-    }
+
 }
 
 //MODIFY
